@@ -2,8 +2,6 @@
 
 WanderLust is a full-stack travel listing web application inspired by Airbnb. It allows users to explore and list vacation rentals with a clean user interface and user authentication.
 
-🔗 **Live Demo**: https://wanderlust-app-yav7.onrender.com/listings
-
 ---
 
 ## 📌 Features
@@ -13,9 +11,7 @@ WanderLust is a full-stack travel listing web application inspired by Airbnb. It
 - 🖼️ Upload images for each listing
 - 🗑️ Edit and delete listings (only by owner)
 - 💬 Add and delete reviews
-
-> ⚠️ *Booking functionality not implemented yet — coming soon!*
-
+  
 ---
 
 ## 🛠️ Tech Stack
@@ -37,12 +33,3 @@ WanderLust is a full-stack travel listing web application inspired by Airbnb. It
 <img width="1403" height="616" alt="image" src="https://github.com/user-attachments/assets/d885a851-6872-4f91-a474-1266947ab478" />
 <img width="1894" height="914" alt="image" src="https://github.com/user-attachments/assets/bbe12211-9ffc-4069-9bf3-54a4fae02695" />
 <img width="1917" height="967" alt="image" src="https://github.com/user-attachments/assets/1da95096-01f8-4ea5-8975-f4ee7114873a" />
-
-
-📧 Contact
-For any queries or suggestions, feel free to reach out:
-
-Raghuveer Kumawat
-📫 Email: raghuveerkumawat.work@gmail.com
-📱 Mobile: +91-7665636251
-🌐 GitHub: github.com/Raghuveer-Tech

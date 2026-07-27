@@ -30,18 +30,29 @@ const dbUrl = process.env.ATLASTDB_URL || "mongodb://127.0.0.1:27017/wanderlust"
 const secret = process.env.SECRET || "wanderlust-secret";
 const port = process.env.PORT || 8080;
 
-main()
-    .then(() => {
-        console.log("DB connected successfully");
-    })
-    .catch(err => {
-        console.log("DB connection failed. Using sample listings fallback.");
-        console.log(err.message);
+async function startServer() {
+    app.listen(port, () => {
+        console.log(`Server now start..port ${port}`);
     });
+}
 
 async function main() {
-  await mongoose.connect(dbUrl);
+    await mongoose.connect(dbUrl);
+    console.log("DB connected successfully");
+    await startServer();
 }
+
+main().catch(err => {
+    console.error("DB connection failed.");
+    console.error(err.message);
+    if (process.env.NODE_ENV === "production") {
+        console.error("Exiting because production cannot run without MongoDB.");
+        process.exit(1);
+    } else {
+        console.log("Starting server without DB in non-production mode.");
+        startServer();
+    }
+});
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

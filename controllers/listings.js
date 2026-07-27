@@ -1,12 +1,21 @@
 const Listing = require("../models/listing");
+const { data: sampleListings } = require("../init/data");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken:mapToken });
 
 //index route
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("./listings/index.ejs", {allListings});
+    try {
+        const allListings = await Listing.find({});
+        if (allListings && allListings.length > 0) {
+            return res.render("./listings/index.ejs", { allListings });
+        }
+    } catch (err) {
+        console.log("Falling back to sample listings:", err.message);
+    }
+
+    res.render("./listings/index.ejs", { allListings: sampleListings });
 };
 
 //new form render

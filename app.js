@@ -1,7 +1,11 @@
 if(process.env.NODE_ENV != "production"){
     require('dotenv').config();
 }
-console.log(process.env.SECRET);
+
+
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -15,23 +19,42 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const Listing = require("./models/listing");
+const initData = require("./init/data");
 
 const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 
 //if want local database and local db url
-const dbUrl = process.env.ATLASTDB_URL;
-
+const dbUrl = process.env.ATLASTDB_URL || "mongodb://127.0.0.1:27017/wanderlust";
+const secret = process.env.SECRET || "wanderlust-secret";
+const port = process.env.PORT || 8080;
 
 main()
     .then(() => {
         console.log("DB connected successfully");
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log("DB connection failed. Using sample listings fallback.");
+        console.log(err.message);
+    });
 
 async function main() {
   await mongoose.connect(dbUrl);
+  const count = await Listing.countDocuments();
+  if (count === 0) {
+      const seededData = initData.data.map((obj) => ({
+          ...obj,
+          owner: "688a00ebb4f55d4eb72a5c48",
+          geometry: {
+              type: "Point",
+              coordinates: [0, 0],
+          },
+      }));
+      await Listing.insertMany(seededData);
+      console.log("Sample listings seeded");
+  }
 }
 
 app.set("view engine", "ejs");
@@ -45,18 +68,18 @@ app.use(express.static(path.join(__dirname, "/public")));
 const store = MongoStore.create({
     mongoUrl  : dbUrl,
     crypto: {
-        secret: process.env.SECRET,
+        secret,
     },
     touchAfter : 24 * 60 * 60,
 })
 
-store.on("error", () => {
+store.on("error", (err) => {
     console.log("Error in MONGO SESSION STORE", err);
 })
 
 const sessionOptions = {
     store,
-    secret : process.env.SECRET,
+    secret,
     resave : false,
     saveUninitialized : true,
     cookie : {
@@ -85,6 +108,10 @@ app.use ((req, res, next) => {
     next();
 });
 
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter)
 app.use("/", userRouter)
@@ -94,11 +121,10 @@ app.all(/.*/, (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    let {statusCode = 500, message = "Something went wrong!"} = err;
-    res.render("./listings/error.ejs", {err});
-    // res.status(statusCode).send(message);
+    let { statusCode = 500, message = "Something went wrong!" } = err;
+    res.status(statusCode).render("./listings/error.ejs", { err, statusCode, message });
 });
 
-app.listen(8080, () => {
-    console.log("Server now start..port 8080");
+app.listen(port, () => {
+    console.log(`Server now start..port ${port}`);
 });

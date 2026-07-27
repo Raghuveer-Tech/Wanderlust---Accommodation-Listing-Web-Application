@@ -6,7 +6,10 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "seed": "node init/index.js",
+    "clear": "node init/index.js clear"
   },
   "type": "commonjs",
   "keywords": [],
@@ -32,6 +35,7 @@
     "mongoose": "^8.16.4",
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",
+    "nodemon": "^3.1.14",
     "parser": "^0.1.4",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",

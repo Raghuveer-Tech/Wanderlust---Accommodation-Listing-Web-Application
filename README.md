@@ -1,35 +1,105 @@
-# 🏕️ WanderLust
+# Wanderlust - Accommodation Listing Web Application
 
-WanderLust is a full-stack travel listing web application inspired by Airbnb. It allows users to explore and list vacation rentals with a clean user interface and user authentication.
+A full-stack accommodation listing app built with Node.js, Express, MongoDB, Passport authentication, Cloudinary image upload, and Mapbox geocoding.
 
----
+## 🚀 Live Demo
 
-## 📌 Features
+Live link: `https://your-live-app-url.example.com`
 
-- 🏡 Create and manage travel listings
-- 🔒 User authentication (Register/Login)
-- 🖼️ Upload images for each listing
-- 🗑️ Edit and delete listings (only by owner)
-- 💬 Add and delete reviews
-  
----
+> Replace the placeholder above with your deployed app URL.
 
-## 🛠️ Tech Stack
+## ✨ Features
 
-- **Frontend**: EJS, Bootstrap
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB, Mongoose
-- **Authentication**: Passport.js
-- **File Uploads**: Cloudinary & Multer
-- **Deployment**: Render
+- User signup, login, and logout with Passport Local
+- Create, edit, and delete accommodation listings
+- Image upload using Cloudinary
+- Mapbox location search and geocoding for listings
+- Reviews per listing with author permissions
+- Flash notifications for success and error states
+- Session management using MongoDB store
 
----
+## 🧭 Tech Stack
 
-## 📷 Screenshots
-<img width="1897" height="910" alt="image" src="https://github.com/user-attachments/assets/2a40780c-f633-433e-ae65-dfa78c0792f1" />
-<img width="1883" height="939" alt="image" src="https://github.com/user-attachments/assets/e0ef8d49-55ce-41bc-badc-90e678b1b67a" />
-<img width="1898" height="841" alt="image" src="https://github.com/user-attachments/assets/67b6eed3-3cf4-415e-9f71-e9501c16ddf4" />
-<img width="1606" height="633" alt="image" src="https://github.com/user-attachments/assets/d78e47ea-b37c-49a8-a1e3-4658bd5e85d2" />
-<img width="1403" height="616" alt="image" src="https://github.com/user-attachments/assets/d885a851-6872-4f91-a474-1266947ab478" />
-<img width="1894" height="914" alt="image" src="https://github.com/user-attachments/assets/bbe12211-9ffc-4069-9bf3-54a4fae02695" />
-<img width="1917" height="967" alt="image" src="https://github.com/user-attachments/assets/1da95096-01f8-4ea5-8975-f4ee7114873a" />
+- Node.js
+- Express
+- MongoDB + Mongoose
+- Passport.js + passport-local-mongoose
+- EJS templates with ejs-mate layout engine
+- Cloudinary image storage
+- Mapbox geocoding
+- Multer file upload
+- connect-flash, express-session, connect-mongo
+
+## ⚙️ Installation
+
+1. Clone the repository
+
+```bash
+git clone <repo-url>
+cd "Wanderlust - Accommodation Listing Web Application"
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Create a `.env` file with the following variables:
+
+```env
+ATLASTDB_URL=mongodb://127.0.0.1:27017/wanderlust
+SECRET=your-session-secret
+MAP_TOKEN=your-mapbox-token
+CLOUD_NAME=your-cloudinary-cloud-name
+CLOUD_API_KEY=your-cloudinary-api-key
+CLOUD_API_SECRET=your-cloudinary-api-secret
+```
+
+4. Run the app
+
+```bash
+npm run dev
+```
+
+5. Open your browser at `http://localhost:8080`
+
+## 🗂️ Available Scripts
+
+- `npm run dev` - start the server with nodemon
+- `npm start` - run the server with Node
+- `npm run seed` - seed sample data
+- `npm run clear` - clear seeded data
+
+## 🖼️ App Screenshots
+
+| Screenshot 1 | Screenshot 2 |
+| --- | --- |
+| ![App Screenshot 1](path/to/screenshot1.png) | ![App Screenshot 2](path/to/screenshot2.png) |
+| Screenshot 3 | Screenshot 4 |
+| ![App Screenshot 3](path/to/screenshot3.png) | ![App Screenshot 4](path/to/screenshot4.png) |
+
+> Replace the placeholder image paths with your actual screenshot file paths.
+
+## 📁 Project Structure
+
+- `app.js` — main Express app configuration
+- `controllers/` — request handlers for listings, reviews, and users
+- `routes/` — route definitions for listings, reviews, and auth
+- `models/` — Mongoose schemas for listings, reviews, and users
+- `views/` — EJS templates for pages and layouts
+- `public/` — static CSS and client JS assets
+- `cloudConfig.js` — Cloudinary storage configuration
+- `middleware.js` — validation and authorization middleware
+- `schema.js` — Joi validation schemas
+- `init/data.js` — sample listing seed data
+
+## ✅ Notes
+
+- Ensure MongoDB is running locally or provide a valid remote Atlas URL.
+- Update the `Live Demo` link after deployment.
+- Add app screenshots to `public/images/` or your preferred folder and update the table paths.
+
+## 📌 License
+
+ISC

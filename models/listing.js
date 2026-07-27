@@ -5,11 +5,11 @@ const Review = require("./review");
 const listingSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   image: {
     url: String,
@@ -17,21 +17,21 @@ const listingSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true
+    required: true,
   },
   location: {
     type: String,
-    required: true
+    required: true,
   },
   country: {
     type: String,
-    required: true
+    required: true,
   },
   reviews: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Review",
-    }
+    },
   ],
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -39,20 +39,20 @@ const listingSchema = new mongoose.Schema({
   },
   geometry: {
     type: {
-      type: String, 
-      enum: ['Point'], 
+      type: String,
+      enum: ["Point"],
       required: true,
-      default: 'Point'
+      default: "Point",
     },
     coordinates: {
       type: [Number],
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 });
 
 // Mongoose Middleware to delete associated reviews when a listing is deleted
-listingSchema.post("findOneAndDelete", async function (doc){
+listingSchema.post("findOneAndDelete", async function (doc) {
   if (doc) {
     await Review.deleteMany({ _id: { $in: doc.reviews } });
   }

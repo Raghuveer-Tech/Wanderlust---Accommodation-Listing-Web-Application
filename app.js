@@ -1,16 +1,15 @@
-if(process.env.NODE_ENV != "production"){
-    require('dotenv').config();
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
 }
 
-
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+const dns = require("dns");
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-const methodOverride = require('method-override'); 
+const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const session = require("express-session");
@@ -25,66 +24,65 @@ const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 
-//if want local database and local db url
 const dbUrl = process.env.MONGO_URL;
 const secret = process.env.SECRET || "wanderlust-secret";
 const port = process.env.PORT || 8080;
 
 async function startServer() {
-    app.listen(port, () => {
-        console.log(`Server now start..port ${port}`);
-    });
+  app.listen(port, () => {
+    console.log(`Server now start..port ${port}`);
+  });
 }
 
 async function main() {
-    await mongoose.connect(dbUrl);
-    console.log("DB connected successfully");
-    await startServer();
+  await mongoose.connect(dbUrl);
+  console.log("DB connected successfully");
+  await startServer();
 }
 
-main().catch(err => {
-    console.error("DB connection failed.");
-    console.error(err.message);
-    if (process.env.NODE_ENV === "production") {
-        console.error("Exiting because production cannot run without MongoDB.");
-        process.exit(1);
-    } else {
-        console.log("Starting server without DB in non-production mode.");
-        startServer();
-    }
+main().catch((err) => {
+  console.error("DB connection failed.");
+  console.error(err.message);
+  if (process.env.NODE_ENV === "production") {
+    console.error("Exiting because production cannot run without MongoDB.");
+    process.exit(1);
+  } else {
+    console.log("Starting server without DB in non-production mode.");
+    startServer();
+  }
 });
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 const store = MongoStore.create({
-    mongoUrl  : dbUrl,
-    crypto: {
-        secret,
-    },
-    touchAfter : 24 * 60 * 60,
-})
+  mongoUrl: dbUrl,
+  crypto: {
+    secret,
+  },
+  touchAfter: 24 * 60 * 60,
+});
 
 store.on("error", (err) => {
-    console.log("Error in MONGO SESSION STORE", err);
-})
+  console.log("Error in MONGO SESSION STORE", err);
+});
 
 const sessionOptions = {
-    store,
-    secret,
-    resave : false,
-    saveUninitialized : true,
-    cookie : {
-        expires : Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge : 7 * 24 * 60 * 60 * 1000,
-        httpOnly : true,
-    }
-}
+  store,
+  secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -98,26 +96,28 @@ passport.serializeUser(User.serializeUser());
 // Tells passport how to get user from session
 passport.deserializeUser(User.deserializeUser());
 
-app.use ((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
-    next();
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
+  next();
 });
 
 app.get("/", (req, res) => {
-    res.redirect("/listings");
+  res.redirect("/listings");
 });
 
 app.use("/listings", listingRouter);
-app.use("/listings/:id/reviews", reviewRouter)
-app.use("/", userRouter)
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 app.all(/.*/, (req, res, next) => {
-    next(new ExpressError(404, "Page Not Found!"));
+  next(new ExpressError(404, "Page Not Found!"));
 });
 
 app.use((err, req, res, next) => {
-    let { statusCode = 500, message = "Something went wrong!" } = err;
-    res.status(statusCode).render("./listings/error.ejs", { err, statusCode, message });
+  let { statusCode = 500, message = "Something went wrong!" } = err;
+  res
+    .status(statusCode)
+    .render("./listings/error.ejs", { err, statusCode, message });
 });

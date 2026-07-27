@@ -5,12 +5,12 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const userSchema = new Schema({
     email: {
         type: String,
-        required: true,  
+        required: true,
+        unique: true
     }
 });
 
-// Apply plugin on schema, not on undefined 'User'
+// Apply passport-local-mongoose plugin for authentication handling
 userSchema.plugin(passportLocalMongoose);
 
-// Export the model
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);

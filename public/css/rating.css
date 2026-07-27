@@ -195,3 +195,20 @@
   -webkit-transition: background-position .7s;
   transition: background-position .7s;
 }
+
+/* Responsive Starability Rating for Mobile Screens */
+@media screen and (max-width: 480px) {
+  .starability-slot,
+  .starability-result {
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .starability-slot,
+  .starability-result {
+    transform: scale(0.7);
+    transform-origin: left center;
+  }
+}

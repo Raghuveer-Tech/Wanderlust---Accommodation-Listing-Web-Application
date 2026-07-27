@@ -59,44 +59,6 @@ body{
     color: #222;
     font-size: 1rem;
 }
-/* footer a:hover {
-  text-decoration: underline !important;
-}
-
-.f-info-links a{
-    text-decoration: none;
-    color: #222;
-}
-
-.f-info-links a:hover{
-    text-decoration: underline;
-}
-
-.f-info-links{
-    width: 100%;
-    vertical-align: middle;
-}
-
-.f-info-socials, .f-info-brand{
-    width: 100%;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.f-info-socials i{
-    margin-right: 1rem;
-}
-.f-info{
-    height: 8rem;
-    background-color: #ebebeb;
-    display: flex;
-    flex-wrap:wrap;
-    justify-content: center;
-    align-items: space-evenly;
-    text-align: center;
-} */
 
 /* cards index page */
 .listing-card{
@@ -112,9 +74,6 @@ body{
 
 .card-body {
     padding: 0 !important;
-}
-
-.card-body{
     font-weight: 400 !important;
 }
 
@@ -160,5 +119,41 @@ body{
 @media (max-width: 768px) {
   #map {
     height: 300px;
+  }
+}
+
+/* ==========================================
+   Responsive Media Queries for Mobile Devices
+   ========================================== */
+
+@media (max-width: 991.98px) {
+  /* Navbar adjustments for tablets and smaller */
+  .navbar {
+    height: auto;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Adjust container spacing on smaller devices */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Show image container height adjustment for mobiles */
+  .show-img {
+    height: 25vh;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Typography and small screen padding adjustments */
+  body {
+    font-size: 14px;
+  }
+
+  .show-img {
+    height: 22vh;
   }
 }

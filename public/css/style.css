@@ -107,7 +107,74 @@ body{
   text-indent: 0.5em; /* Indents the first line of each paragraph */
 }
 
-/* map */
+/* filter / navbar styles moved from EJS */
+#filters::-webkit-scrollbar {
+  display: none;
+}
+#filters {
+  scrollbar-width: none; /* Firefox */
+}
+.filter-container {
+  max-width: 80%;
+}
+.filter i {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+.filter:hover i {
+  opacity: 1;
+  cursor: pointer;
+}
+.filter p {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  white-space: nowrap;
+}
+.tax-toggle {
+  border: 1px solid black;
+  border-radius: 1rem;
+  height: 2.5rem;
+  padding: 1rem;
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.search-btn {
+  background-color: #fe424d;
+  color: #fff;
+  border-radius: 20rem;
+  padding: 0 1rem;
+}
+.search-btn:hover {
+  opacity: 0.8;
+  background-color: #fe424d;
+  color: #fff;
+}
+.search-btn i {
+  display: inline;
+  margin-right: 0.5rem;
+}
+.search-inp {
+  border-radius: 20rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+@media (min-width: 768px) {
+  .search-inp {
+    width: 20rem;
+    padding: 0.5rem 2rem;
+  }
+}
+.index-card-img {
+  height: 20rem;
+  object-fit: cover;
+}
+.show-card-img {
+  height: 250px;
+  object-fit: cover;
+}
 /* Mapbox Map Styling */
 #map {
   height: 400px;

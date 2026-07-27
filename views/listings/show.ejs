@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate.ejs") -%>
 <script>
   const mapTOKEN = "<%= process.env.MAP_TOKEN %>";
-  const listings = <%- JSON.stringify(listing)%>
+  const listing = <%- JSON.stringify(listing)%>
 </script>
   <div class="container mt-4">
     <div class="row justify-content-center">
@@ -12,7 +12,7 @@
 
         <!-- Card -->
         <div class="card shadow-sm border-0 listing-card">
-          <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing Image" style="height: 250px; object-fit: cover;">
+          <img src="<%= listing.image?.url || 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=60' %>" class="card-img-top show-card-img" alt="Listing Image">
 
           <div class="card-body">
             <!-- <p class="card-text mb-2"><i>< listing.owner.username %></i></p> -->
@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <% if(currUser && listing.owner._id.equals(currUser.id)){ %>
+        <% if(currUser && listing.owner && listing.owner._id && listing.owner._id.equals(currUser.id)){ %>
          <!-- Buttons in one line -->
         
           <div class="d-flex gap-2 mt-4">
@@ -84,22 +84,24 @@
 
 </div>
 
-<% if(listing.review.length > 0){%>
+<% if(listing.reviews && listing.reviews.length > 0){%>
 <div class="row  offset-1 mt-4" >
   <p><b>All Reviews</b></p>
  
-<% for(review of listing.review){%>
+<% for(review of listing.reviews){%>
   <div class="card col-5 mb-4 ms-4" >
   <div class="card-body">
-    <h5 class="card-title">@<%= review.author.username%></h5>
+    <h5 class="card-title">@<%= review.author?.username || 'Guest' %></h5>
     <p class="starability-result card-text" data-rating="<%=review.rating%>">
     </p>
     <p class="card-text"><%=review.comment%></p>
   </div>
   
-  <form class="mb-3 mt-3" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id%>?_method=DELETE">
-    <button class="btn btn-sm btn-dark">Delete</button>
-  </form>
+  <% if(currUser && review.author && review.author._id && review.author._id.equals(currUser.id)){ %>
+    <form class="mb-3 mt-3" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id%>?_method=DELETE">
+      <button class="btn btn-sm btn-dark">Delete</button>
+    </form>
+  <% } %>
 </div>
 <%}%>
 </div>

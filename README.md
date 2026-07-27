@@ -56,13 +56,25 @@ CLOUD_API_KEY=your-cloudinary-api-key
 CLOUD_API_SECRET=your-cloudinary-api-secret
 ```
 
-4. Run the app
+4. Seed the database with a sample user and listings
+
+```bash
+npm run seed
+```
+
+5. Run the app
 
 ```bash
 npm run dev
 ```
 
-5. Open your browser at `http://localhost:8080`
+6. Open your browser at `http://localhost:8080`
+
+7. Login with the seeded account
+
+- Email: `seed@wanderlust.app`
+- Username: `seedhost`
+- Password: `SeedPassword123!`
 
 ## 🗂️ Available Scripts
 

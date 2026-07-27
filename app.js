@@ -42,19 +42,6 @@ main()
 
 async function main() {
   await mongoose.connect(dbUrl);
-  const count = await Listing.countDocuments();
-  if (count === 0) {
-      const seededData = initData.data.map((obj) => ({
-          ...obj,
-          owner: "688a00ebb4f55d4eb72a5c48",
-          geometry: {
-              type: "Point",
-              coordinates: [0, 0],
-          },
-      }));
-      await Listing.insertMany(seededData);
-      console.log("Sample listings seeded");
-  }
 }
 
 app.set("view engine", "ejs");

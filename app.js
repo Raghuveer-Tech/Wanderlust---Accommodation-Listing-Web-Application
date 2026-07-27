@@ -121,7 +121,3 @@ app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong!" } = err;
     res.status(statusCode).render("./listings/error.ejs", { err, statusCode, message });
 });
-
-app.listen(port, () => {
-    console.log(`Server now start..port ${port}`);
-});

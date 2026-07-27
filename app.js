@@ -26,7 +26,7 @@ const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 
 //if want local database and local db url
-const dbUrl = process.env.ATLASTDB_URL || "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.MONGO_URL;
 const secret = process.env.SECRET || "wanderlust-secret";
 const port = process.env.PORT || 8080;
 

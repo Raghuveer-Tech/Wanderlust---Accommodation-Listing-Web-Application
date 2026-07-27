@@ -20,7 +20,6 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const Listing = require("./models/listing");
-const initData = require("./init/data");
 
 const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
